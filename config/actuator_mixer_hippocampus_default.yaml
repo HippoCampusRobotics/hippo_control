@@ -1,0 +1,27 @@
+channels:
+  roll: 0
+  pitch: 1
+  yaw: 2
+  thrust: 3
+  vertical_thrust: 4
+  lateral_thrust: 5
+  reserved_0: 6
+  reserved_1: 7
+
+n_actuators: 4
+
+actuator_0:
+  scaling: [-1.0, 1.0, -1.0, 1.0, 0.0, 0.0, 0.0]
+  limit: [1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+
+actuator_1:
+  scaling: [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+  limit: [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+
+actuator_2:
+  scaling: [-1.0, -1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+  limit: [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+
+actuator_3:
+  scaling: [1.0, -1.0, -1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+  limit: [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
