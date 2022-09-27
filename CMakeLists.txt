@@ -33,12 +33,34 @@ install(TARGETS ${lib_name}
 )
 
 ################################################################################
+# mixer library
+################################################################################
+set(lib_name mixer)
+add_library(${lib_name} src/simple_mixer.cpp)
+target_include_directories(${lib_name}
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+ament_target_dependencies(${lib_name} rclcpp)
+ament_export_targets(${lib_name}Target HAS_LIBRARY_TARGET)
+ament_export_dependencies(rclcpp)
+
+install(TARGETS ${lib_name}
+  EXPORT ${lib_name}Target
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
+################################################################################
 # actuator_command_mixer_node
 ################################################################################
 set(exec_name actuator_command_mixer_node)
-add_executable(${exec_name} src/actuator_command_mixer_node.cpp src/simple_mixer.cpp)
-ament_target_dependencies(${exec_name} rclcpp hippo_msgs hippo_common)
-
+add_executable(${exec_name} src/nodes/actuator_command_mixer_node.cpp)
+ament_target_dependencies(${exec_name} rclcpp hippo_msgs hippo_common hippo_msgs)
+target_link_libraries(${exec_name} mixer)
 install (TARGETS ${exec_name}
   DESTINATION lib/${PROJECT_NAME}
 )

@@ -2,7 +2,7 @@
 #include <hippo_msgs/msg/actuator_controls.hpp>
 #include <rclcpp/rclcpp.hpp>
 
-#include "hippo_control/simple_mixer.hpp"
+#include "hippo_control/mixer/simple_mixer.hpp"
 
 using namespace hippo_control;
 using namespace hippo_common;

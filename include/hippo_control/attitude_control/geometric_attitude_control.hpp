@@ -2,6 +2,7 @@
 #include <eigen3/Eigen/Dense>
 #include <vector>
 namespace hippo_control {
+namespace attitude_control {
 class GeometricAttitudeControl {
  public:
   /**
@@ -24,8 +25,8 @@ class GeometricAttitudeControl {
 
   /**
    * @brief Set proportional gains for roll, pitch and yaw angle.
-   * 
-   * @param _gains 
+   *
+   * @param _gains
    */
   void SetPgains(const Eigen::Array3d &_gains) {
     p_gains_ = Eigen::Array3d(_gains);
@@ -37,7 +38,7 @@ class GeometricAttitudeControl {
     p_gains_ = Eigen::Array3d(_gains.data());
   }
   /**
-   * @overload 
+   * @overload
    */
   void SetPgains(const std::array<double, 3> &_gains) {
     p_gains_ = Eigen::Array3d(_gains.data());
@@ -45,8 +46,8 @@ class GeometricAttitudeControl {
 
   /**
    * @brief Set the derivate gains for roll, pitch and yaw angular velocity.
-   * 
-   * @param _gains 
+   *
+   * @param _gains
    */
   void SetDgains(const Eigen::Array3d &_gains) {
     d_gains_ = Eigen::Array3d(_gains);
@@ -69,4 +70,5 @@ class GeometricAttitudeControl {
   Eigen::Array3d p_gains_{1.0, 1.0, 1.0};
   Eigen::Array3d d_gains_{0.1, 0.1, 0.1};
 };
+}  // namespace attitude_control
 }  // namespace hippo_control
