@@ -23,6 +23,7 @@
   <depend>rclcpp</depend>
   <depend>hippo_msgs</depend>
   <depend>hippo_common</depend>
+  <depend>eigen</depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

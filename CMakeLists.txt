@@ -10,7 +10,9 @@ find_package(Eigen3 REQUIRED)
 include_directories(
   include
 )
-
+################################################################################
+# attitude_control library
+################################################################################
 set(lib_name attitude_control)
 add_library(${lib_name} src/geometric_attitude_control.cpp)
 target_include_directories(${lib_name}
@@ -22,11 +24,6 @@ ament_target_dependencies(${lib_name} rclcpp Eigen3)
 ament_export_targets(${lib_name}Target HAS_LIBRARY_TARGET)
 ament_export_dependencies(rclcpp Eigen3)
 
-install(
-  DIRECTORY include/
-  DESTINATION include
-)
-
 install(TARGETS ${lib_name}
   EXPORT ${lib_name}Target
   LIBRARY DESTINATION lib
@@ -35,14 +32,29 @@ install(TARGETS ${lib_name}
   INCLUDES DESTINATION include
 )
 
-add_executable(actuator_command_mixer src/actuator_command_mixer.cpp src/simple_mixer.cpp)
+################################################################################
+# actuator_command_mixer_node
+################################################################################
+set(exec_name actuator_command_mixer_node)
+add_executable(${exec_name} src/actuator_command_mixer_node.cpp src/simple_mixer.cpp)
+ament_target_dependencies(${exec_name} rclcpp hippo_msgs hippo_common)
 
-ament_target_dependencies(actuator_command_mixer rclcpp hippo_msgs hippo_common)
-
-install (TARGETS actuator_command_mixer
+install (TARGETS ${exec_name}
   DESTINATION lib/${PROJECT_NAME}
 )
 
+
+################################################################################
+# install headers
+################################################################################
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+
+################################################################################
+# install shared resources
+################################################################################
 install(
   DIRECTORY launch config
   DESTINATION share/${PROJECT_NAME}
