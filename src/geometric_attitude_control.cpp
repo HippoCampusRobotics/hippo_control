@@ -1,11 +1,37 @@
 #include "hippo_control/geometric_attitude_control.hpp"
 
+#include <cmath>
+
 namespace hippo_control {
-Eigen::Vector3d Update(const Eigen::Quaterniond &_orientation,
-                       const Eigen::Quaterniond &_orientation_target,
-                       const Eigen::Vector3d &_rotation_velocity,
-                       const Eigen::Vector3d &_rotation_velocity_target) {
-  Eigen::Vector3d torque;
-  return torque;
+Eigen::Vector3d GeometricAttitudeControl::Update(
+    const Eigen::Quaterniond &_orientation,
+    const Eigen::Quaterniond &_orientation_target,
+    const Eigen::Vector3d &_angular_velocity,
+    const Eigen::Vector3d &_angular_velocity_target, bool _scale) {
+  Eigen::Matrix3d R = _orientation.toRotationMatrix();
+  Eigen::Matrix3d R_desired = _orientation_target.toRotationMatrix();
+  Eigen::Matrix3d R_error =
+      0.5 * (R_desired.transpose() * R - R.transpose() * R_desired);
+
+  // use array instead of vector to simplify coefficient-wise operations
+  Eigen::Array3d R_error_vector{R_error(1, 2), R_error(2, 0), R_error(0, 1)};
+
+  Eigen::Array3d angular_velocity_error{_angular_velocity -
+                                        _angular_velocity_target};
+
+  Eigen::Array3d torque;
+  torque = p_gains_ * R_error_vector + d_gains_ * angular_velocity_error;
+
+  if (_scale) {
+    double scaler = (torque.abs().maxCoeff());
+    if (scaler > 1.0) {
+      torque /= scaler;
+    }
+  } else {
+    torque = torque.min(1.0).max(-1.0);
+  }
+
+  return Eigen::Vector3d{torque};
 }
+
 }  // namespace hippo_control
