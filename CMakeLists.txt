@@ -5,6 +5,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(hippo_msgs REQUIRED)
 find_package(hippo_common REQUIRED)
+find_package(nav_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
 
 include_directories(
@@ -52,6 +53,17 @@ install(TARGETS ${lib_name}
   ARCHIVE DESTINATION lib
   RUNTIME DESTINATION bin
   INCLUDES DESTINATION include
+)
+
+################################################################################
+# attitude_control_node
+################################################################################
+set(exec_name attitude_control_node)
+add_executable(${exec_name} src/nodes/attitude_control_node.cpp)
+ament_target_dependencies(${exec_name} rclcpp hippo_msgs hippo_common nav_msgs)
+target_link_libraries(${exec_name} attitude_control)
+install(TARGETS ${exec_name}
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 ################################################################################
