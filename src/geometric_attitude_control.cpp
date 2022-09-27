@@ -1,8 +1,9 @@
-#include "hippo_control/geometric_attitude_control.hpp"
+#include "hippo_control/attitude_control/geometric_attitude_control.hpp"
 
 #include <cmath>
 
 namespace hippo_control {
+namespace attitude_control {
 Eigen::Vector3d GeometricAttitudeControl::Update(
     const Eigen::Quaterniond &_orientation,
     const Eigen::Quaterniond &_orientation_target,
@@ -33,5 +34,6 @@ Eigen::Vector3d GeometricAttitudeControl::Update(
 
   return Eigen::Vector3d{torque};
 }
+}  // namespace attitude_control
 
 }  // namespace hippo_control

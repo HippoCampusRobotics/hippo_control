@@ -1,4 +1,4 @@
-#include "hippo_control/simple_mixer.hpp"
+#include "hippo_control/mixer/simple_mixer.hpp"
 
 #include <math.h>
 
