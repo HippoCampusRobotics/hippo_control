@@ -9,19 +9,40 @@ class GeometricAttitudeControl {
    * @brief Computes the controller output.
    *
    * @param _orientation Current orientation as quaternion.
-   * @param _orientation_target Target orientation as quaternion.
    * @param _angular_velocity Current angular velocity (rad/s).
-   * @param _angular_velocity_target Target angular velocity (rad/s).
    * @param _scale Toggles between clip and scale mode to get output values in
    * range [-1.0, 1.0].
    * @return Eigen::Vector3d Control output as vector of roll, pitch and yaw
    * torque normalized to a maximum of 1.0.
    */
   Eigen::Vector3d Update(const Eigen::Quaterniond &_orientation,
-                         const Eigen::Quaterniond &_orientation_target,
                          const Eigen::Vector3d &_angular_velocity,
-                         const Eigen::Vector3d &_angular_velocity_target,
                          bool _scale = true);
+  void SetOrientationTarget(const Eigen::Quaterniond &_target) {
+    orientation_target_ = _target;
+  }
+  void SetOrientationTarget(const double _roll, const double _pitch,
+                            const double _yaw);
+  void SetAngularVelocityTarget(const Eigen::Vector3d &_target) {
+    v_angular_target_ = _target;
+  }
+  void SetAngularVelocityTarget(const double _roll, const double _pitch,
+                                const double _yaw) {
+    v_angular_target_.x() = _roll;
+    v_angular_target_.y() = _pitch;
+    v_angular_target_.z() = _yaw;
+  }
+  void SetRollGainP(double _gain) { p_gains_.x() = _gain; }
+
+  void SetPitchGainP(double _gain) { p_gains_.y() = _gain; }
+
+  void SetYawGainP(double _gain) { p_gains_.z() = _gain; }
+
+  void SetRollGainD(double _gain) { d_gains_.x() = _gain; }
+
+  void SetPitchGainD(double _gain) { d_gains_.y() = _gain; }
+
+  void SetYawGainD(double _gain) { d_gains_.z() = _gain; }
 
   /**
    * @brief Set proportional gains for roll, pitch and yaw angle.
@@ -69,6 +90,9 @@ class GeometricAttitudeControl {
   // use array instead of vector to simplify coefficient wise multiplication
   Eigen::Array3d p_gains_{1.0, 1.0, 1.0};
   Eigen::Array3d d_gains_{0.1, 0.1, 0.1};
+
+  Eigen::Vector3d v_angular_target_{0.0, 0.0, 0.0};
+  Eigen::Quaterniond orientation_target_{1.0, 0.0, 0.0, 0.0};
 };
 }  // namespace attitude_control
 }  // namespace hippo_control

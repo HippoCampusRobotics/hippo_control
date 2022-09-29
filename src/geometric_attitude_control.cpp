@@ -6,11 +6,9 @@ namespace hippo_control {
 namespace attitude_control {
 Eigen::Vector3d GeometricAttitudeControl::Update(
     const Eigen::Quaterniond &_orientation,
-    const Eigen::Quaterniond &_orientation_target,
-    const Eigen::Vector3d &_angular_velocity,
-    const Eigen::Vector3d &_angular_velocity_target, bool _scale) {
+    const Eigen::Vector3d &_angular_velocity, bool _scale) {
   Eigen::Matrix3d R = _orientation.toRotationMatrix();
-  Eigen::Matrix3d R_desired = _orientation_target.toRotationMatrix();
+  Eigen::Matrix3d R_desired = orientation_target_.toRotationMatrix();
   Eigen::Matrix3d R_error =
       0.5 * (R_desired.transpose() * R - R.transpose() * R_desired);
 
@@ -33,6 +31,13 @@ Eigen::Vector3d GeometricAttitudeControl::Update(
   }
 
   return Eigen::Vector3d{torque};
+}
+void GeometricAttitudeControl::SetOrientationTarget(const double _roll,
+                                                    const double _pitch,
+                                                    const double _yaw) {
+  orientation_target_ = Eigen::AngleAxisd(_yaw, Eigen::Vector3d::UnitZ()) *
+                        Eigen::AngleAxisd(_pitch, Eigen::Vector3d::UnitY()) *
+                        Eigen::AngleAxisd(_roll, Eigen::Vector3d::UnitX());
 }
 }  // namespace attitude_control
 
