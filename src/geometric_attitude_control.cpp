@@ -15,8 +15,7 @@ Eigen::Vector3d GeometricAttitudeControl::Update(
   // use array instead of vector to simplify coefficient-wise operations
   Eigen::Array3d R_error_vector{R_error(1, 2), R_error(2, 0), R_error(0, 1)};
 
-  Eigen::Array3d angular_velocity_error{_angular_velocity -
-                                        _angular_velocity_target};
+  Eigen::Array3d angular_velocity_error{v_angular_target_ - _angular_velocity};
 
   Eigen::Array3d torque;
   torque = p_gains_ * R_error_vector + d_gains_ * angular_velocity_error;
