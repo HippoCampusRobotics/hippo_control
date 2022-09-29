@@ -16,9 +16,9 @@ class ActuatorCommandMixer : public rclcpp::Node {
     RCLCPP_INFO(get_logger(), "Declaring Paramters");
     DeclareParams();
     auto qos = rclcpp::SystemDefaultsQoS();
-    actuator_controls_pub_ = create_publisher<ActuatorControls>("out", qos);
+    actuator_controls_pub_ = create_publisher<ActuatorControls>("thruster_command", qos);
     actuator_controls_sub_ = create_subscription<ActuatorControls>(
-        "in", qos,
+        "actuator_control", qos,
         std::bind(&ActuatorCommandMixer::OnActuatorControls, this, _1));
     RCLCPP_INFO(get_logger(), "Initialization complete.");
   }
