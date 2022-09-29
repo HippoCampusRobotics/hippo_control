@@ -60,7 +60,7 @@ install(TARGETS ${lib_name}
 ################################################################################
 set(exec_name attitude_control_node)
 add_executable(${exec_name} src/nodes/attitude_control_node.cpp)
-ament_target_dependencies(${exec_name} rclcpp hippo_msgs hippo_common nav_msgs)
+ament_target_dependencies(${exec_name} rclcpp hippo_msgs hippo_common nav_msgs Eigen3)
 target_link_libraries(${exec_name} attitude_control)
 install(TARGETS ${exec_name}
   DESTINATION lib/${PROJECT_NAME}
