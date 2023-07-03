@@ -24,10 +24,12 @@
   <depend>rclcpp_components</depend>
   <depend>hippo_msgs</depend>
   <depend>hippo_common</depend>
+  <depend>path_planning</depend>
   <depend>eigen</depend>
   <depend>nav_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>px4_msgs</depend>
+  <depend>yaml-cpp</depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
