@@ -2,8 +2,8 @@
 Changelog for package hippo_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.0 (2024-07-16)
+------------------
 * moved to separate repo
 * launch file cleanup
 * refactoring
