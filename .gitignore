@@ -1,0 +1,6 @@
+**/COLCON_IGNORE
+*.pyc
+**/__pycache__/
+*.swp
+**/venv/
+*.idea/
