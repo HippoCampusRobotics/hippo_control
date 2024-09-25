@@ -27,6 +27,7 @@ class ActuatorMixerNode : public rclcpp::Node {
   void ResetThrust();
   void ResetTorque();
   void PublishActuatorCommand(const rclcpp::Time &_now);
+  void PublishZeroActuatorCommand(const rclcpp::Time &_now);
   mixer_bluerov::SimpleMixer mixer_;
   rclcpp::Subscription<hippo_control_msgs::msg::ActuatorSetpoint>::SharedPtr
       torque_setpoint_sub_;
@@ -45,6 +46,7 @@ class ActuatorMixerNode : public rclcpp::Node {
   std::array<double, mixer_bluerov::InputChannels::kCount> inputs_;
   rclcpp::Time t_last_thrust_setpoint_;
   rclcpp::Time t_last_torque_setpoint_;
+
 };
 }  // namespace mixer_bluerov
 }  // namespace hippo_control

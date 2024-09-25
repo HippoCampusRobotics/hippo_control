@@ -46,35 +46,55 @@ ActuatorMixerNode::ActuatorMixerNode(rclcpp::NodeOptions const &_options)
 
 void ActuatorMixerNode::WatchdogTimeout() {
   auto t_now = now();
-  static bool timed_out_prev{false};
-  bool timed_out{true};
+  static bool timed_out_thrusts_prev{false};
+  static bool timed_out_torques_prev{false};
+  bool timed_out_thrusts{false};
+  bool timed_out_torques{false};
+
   if ((t_now - t_last_thrust_setpoint_).nanoseconds() * 1e-6 > kTimeoutMs) {
     ResetThrust();
-    timed_out = true;
-  } else if ((t_now - t_last_torque_setpoint_).nanoseconds() * 1e-6 >
+    timed_out_thrusts = true;
+  }
+  if ((t_now - t_last_torque_setpoint_).nanoseconds() * 1e-6 >
              kTimeoutMs) {
     ResetTorque();
-    timed_out = true;
-  } else {
-    timed_out = false;
-  }
-  if (timed_out && !timed_out_prev) {
-    RCLCPP_WARN_STREAM(get_logger(),
-                       "Input messages timed out. Waiting for new messages");
-  } else if (!timed_out && timed_out_prev) {
-    RCLCPP_INFO(get_logger(),
-                "Received new input messages. Not timed out anymore.");
+    timed_out_torques = true;
   }
 
-  if (timed_out) {
-    PublishActuatorCommand(t_now);
+  if (timed_out_thrusts && !timed_out_thrusts_prev) {
+    RCLCPP_WARN_STREAM(get_logger(),
+                       "Thrust input messages timed out. Setting thrusts to zero.");
+  } else if (!timed_out_thrusts && timed_out_thrusts_prev) {
+    RCLCPP_INFO(get_logger(),
+                "Received new thrust input messages. Not timed out anymore.");
   }
-  timed_out_prev = timed_out;
+    if (timed_out_torques && !timed_out_torques_prev) {
+    RCLCPP_WARN_STREAM(get_logger(),
+                       "Torque input messages timed out. Setting torques to zero.");
+  } else if (!timed_out_torques && timed_out_torques_prev) {
+    RCLCPP_INFO(get_logger(),
+                "Received new torque input messages. Not timed out anymore.");
+  }
+
+  if (timed_out_thrusts && timed_out_torques) {
+    PublishZeroActuatorCommand(t_now);
+  }
+  timed_out_thrusts_prev = timed_out_thrusts;
+  timed_out_torques_prev = timed_out_torques;
 }
 
 void ActuatorMixerNode::PublishActuatorCommand(const rclcpp::Time &_now) {
   hippo_control_msgs::msg::ActuatorControls msg;
   msg.control = mixer_.Mix(inputs_);
+  msg.header.stamp = _now;
+  actuator_controls_pub_->publish(msg);
+}
+
+void ActuatorMixerNode::PublishZeroActuatorCommand(const rclcpp::Time &_now) {
+  hippo_control_msgs::msg::ActuatorControls msg;
+  for (double &control:msg.control) {
+    control = 0.0;
+  }
   msg.header.stamp = _now;
   actuator_controls_pub_->publish(msg);
 }
