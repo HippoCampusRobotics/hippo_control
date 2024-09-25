@@ -2,6 +2,12 @@
 Changelog for package hippo_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix mixing zero commands at time out, handle time outs seperately for thrusts and torques
+* added README
+* Contributors: NBauschmann, Thies Lennart Alff
+
 1.0.0 (2024-07-16)
 ------------------
 * moved to separate repo
