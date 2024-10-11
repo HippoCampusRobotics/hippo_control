@@ -24,7 +24,14 @@ namespace attitude_control {
 Eigen::Vector3d GeometricController::Update(
     const Eigen::Quaterniond &_orientation,
     const Eigen::Vector3d &_angular_velocity) {
-  Eigen::Matrix3d R = _orientation.toRotationMatrix();
+  Eigen::Quaterniond orientation_canonical;
+  if (_orientation.w < 0) {
+    orientation_canonical.w() = -1.0 * _orientation.w();
+    orientation_canonical.x() = -1.0 * _orientation.x();
+    orientation_canonical.y() = -1.0 * _orientation.y();
+    orientation_canonical.z() = -1.0 * _orientation.z();
+  }
+  Eigen::Matrix3d R = orientation_canonical.toRotationMatrix();
   Eigen::Matrix3d R_desired = orientation_target_.toRotationMatrix();
   Eigen::Matrix3d R_error =
       0.5 * (R_desired.transpose() * R - R.transpose() * R_desired);
