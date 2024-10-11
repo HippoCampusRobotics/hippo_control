@@ -25,7 +25,7 @@ Eigen::Vector3d GeometricController::Update(
     const Eigen::Quaterniond &_orientation,
     const Eigen::Vector3d &_angular_velocity) {
   Eigen::Quaterniond orientation_canonical;
-  if (_orientation.w < 0) {
+  if (_orientation.w() < 0) {
     orientation_canonical.w() = -1.0 * _orientation.w();
     orientation_canonical.x() = -1.0 * _orientation.x();
     orientation_canonical.y() = -1.0 * _orientation.y();
