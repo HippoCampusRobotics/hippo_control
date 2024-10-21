@@ -59,8 +59,8 @@ def add_composable_nodes(launch_description: LaunchDescription):
         namespace=LaunchConfiguration('vehicle_name'),
         name='path_follower',
         parameters=[
-            args,
             LaunchConfiguration('path_follower_config'),
+            args,
         ],
         extra_arguments=extra_args,
     )
@@ -73,6 +73,7 @@ def add_composable_nodes(launch_description: LaunchDescription):
         executable='component_container',
         composable_node_descriptions=nodes,
         output='screen',
+        emulate_tty=True,
     )
     launch_description.add_action(container)
 
