@@ -2,6 +2,14 @@
 Changelog for package hippo_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* emulate_tty for colored output
+* changed condition for canonical quternion
+* use a canonical quaternion for orientation input
+* use a canonical quaternion for orientation input
+* Contributors: Thies Lennart Alff
+
 1.0.1 (2024-09-25)
 ------------------
 * fix mixing zero commands at time out, handle time outs seperately for thrusts and torques
