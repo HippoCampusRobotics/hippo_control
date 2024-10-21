@@ -2,8 +2,8 @@
 Changelog for package hippo_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.2 (2024-10-21)
+------------------
 * emulate_tty for colored output
 * changed condition for canonical quternion
 * use a canonical quaternion for orientation input
