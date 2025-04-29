@@ -30,6 +30,10 @@ def add_node(launch_description: LaunchDescription):
             {'use_sim_time': LaunchConfiguration('use_sim_time')},
             LaunchConfiguration('mixer_path'),
         ],
+        remappings=[
+                    ('/bluerov/thrust_setpoint', '/klopsi00/thrust_setpoint'),
+                    ('/bluerov/torque_setpoint', '/klopsi00/torque_setpoint'),
+                ],
         output='screen',
     )
     launch_description.add_action(action)
