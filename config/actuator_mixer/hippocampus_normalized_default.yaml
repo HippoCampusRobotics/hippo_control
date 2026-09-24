@@ -11,10 +11,10 @@
     # OUTPUT = MixerMatrix * INPUT
 
     mixer_matrix: [
-      +0.25, -0.25, +0.25, -0.25, +0.00, +0.00, # motor 0
-      +0.25, +0.25, +0.25, +0.25, +0.00, +0.00, # motor 1
-      +0.25, +0.25, -0.25, -0.25, +0.00, +0.00, # motor 2
-      +0.25, -0.25, -0.25, +0.25, +0.00, +0.00, # motor 3
+      +2.3364, -0.358, +0.358, -0.0215, +0.00, +0.00, # motor 0
+      +2.3364, +0.358, +0.358, +0.0215, +0.00, +0.00, # motor 1
+      +2.3364, +0.358, -0.358, -0.0215, +0.00, +0.00, # motor 2
+      +2.3364, -0.358, -0.358, +0.0215, +0.00, +0.00, # motor 3
       +0.00, +0.00, +0.00, +0.00, +0.00, +0.00, # motor 4
       +0.00, +0.00, +0.00, +0.00, +0.00, +0.00, # motor 5
       +0.00, +0.00, +0.00, +0.00, +0.00, +0.00, # motor 6
@@ -36,8 +36,8 @@
     output_scalings: [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
 
     # Thrust is assumed to be a quadratic function of revs per second.
-    quadratic_coefficient: 0.0
-    linear_coefficient: 1.0
+    quadratic_coefficient: 0.6084
+    linear_coefficient: 0.3916
     constant_coefficient: 0.0
     # thrust [N] below which a zero output is generated
     zero_throttle_threshold: 0.000001
